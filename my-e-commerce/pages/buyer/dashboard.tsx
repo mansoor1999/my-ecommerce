@@ -3,8 +3,17 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 
-const BuyerDashboard: React.FC = (props) => {
-  const [products, setProducts] = useState<any[]>([]);
+interface Product {
+  id: number;
+  name: string;
+  category: string;
+  description: string;
+  price: number;
+  discount: number;
+}
+
+const BuyerDashboard: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<number[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -13,11 +22,11 @@ const BuyerDashboard: React.FC = (props) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('/api/prisma/productss'); // Ensure this endpoint is correct
+        const response = await axios.get('/api/prisma/productss'); // Ensure this is correct
         setProducts(response.data);
       } catch (err) {
         setError('Failed to fetch products');
-        console.error(err);
+        console.error('Error fetching products:', err);
       }
     };
 
@@ -46,7 +55,7 @@ const BuyerDashboard: React.FC = (props) => {
   const handleAddToCart = async (productId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      router.push('/login'); // Redirect to login if not authenticated
+      router.push('/login');
       return;
     }
 
@@ -54,8 +63,7 @@ const BuyerDashboard: React.FC = (props) => {
       await axios.post('/api/prisma/carts', { productId }, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      // Update cart state with the new item
-      setCart((prevCart) => [...prevCart, productId]);
+      setCart(prevCart => [...prevCart, productId]);
     } catch (err) {
       setError('Failed to add to cart');
       console.error(err);
@@ -65,7 +73,7 @@ const BuyerDashboard: React.FC = (props) => {
   const handleRemoveFromCart = async (productId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      router.push('/login'); // Redirect to login if not authenticated
+      router.push('/login');
       return;
     }
 
@@ -73,8 +81,7 @@ const BuyerDashboard: React.FC = (props) => {
       await axios.delete(`/api/prisma/cart/${productId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      // Update cart state by removing the item
-      setCart((prevCart) => prevCart.filter((id) => id !== productId));
+      setCart(prevCart => prevCart.filter(id => id !== productId));
     } catch (err) {
       setError('Failed to remove from cart');
       console.error(err);
@@ -96,18 +103,18 @@ const BuyerDashboard: React.FC = (props) => {
           placeholder="Search by name or category"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border border-gray-300 p-2 mt-4 w-full text-black" // Added text-black
+          className="border border-gray-300 p-2 mt-4 w-full text-black"
         />
         <div className="mt-6">
           <h2 className="text-xl font-semibold text-stone-950">Products</h2>
           <ul>
             {filteredProducts.map((product) => (
               <li key={product.id} className="border p-4 mb-2">
-                <h3 className="text-lg font-semibold text-black">{product.name}</h3> {/* Added text-black */}
-                <p className="text-black">Category: {product.category}</p> {/* Added text-black */}
-                <p className="text-black">Description: {product.description}</p> {/* Added text-black */}
-                <p className="text-black">Price: ${product.price}</p> {/* Added text-black */}
-                <p className="text-black">Discount: {product.discount}%</p> {/* Added text-black */}
+                <h3 className="text-lg font-semibold text-black">{product.name}</h3>
+                <p className="text-black">Category: {product.category}</p>
+                <p className="text-black">Description: {product.description}</p>
+                <p className="text-black">Price: ${product.price}</p>
+                <p className="text-black">Discount: {product.discount}%</p>
                 <button
                   onClick={() => handleAddToCart(product.id)}
                   className={`bg-blue-500 text-white px-4 py-2 rounded mt-2 mr-2 ${cart.includes(product.id) ? 'opacity-50 cursor-not-allowed' : ''}`}
