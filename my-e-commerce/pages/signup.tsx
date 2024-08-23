@@ -35,7 +35,7 @@ const Signup: React.FC = (props) => {
 
   return (
     <Layout>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-500">
         <h1 className="text-3xl font-bold text-blue-500 mb-6">Sign Up</h1>
         {success && <div className="text-green-500 mb-4">{success}</div>}
         {error && <div className="text-red-500 mb-4">{error}</div>}

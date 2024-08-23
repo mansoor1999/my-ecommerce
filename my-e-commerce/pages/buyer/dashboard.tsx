@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
-
+import Link from'next/link';
 interface Product {
   id: number;
   name: string;
@@ -12,7 +12,7 @@ interface Product {
   discount: number;
 }
 
-const BuyerDashboard: React.FC = () => {
+const BuyerDashboard: React.FC = (props) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<number[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -134,6 +134,13 @@ const BuyerDashboard: React.FC = () => {
           </ul>
         </div>
       </div>
+        <div className="min-h-screen bg-gray-500 flex flex-col">
+      <footer className="bg-stone-900 text-white p-4 border-t border-gray-600 mt-auto">
+        <div className="container mx-auto flex justify-center items-center">
+          <Link href="/" className="text-white hover:underline">LogOut</Link>
+        </div>
+      </footer>
+    </div>
     </Layout>
   );
 };

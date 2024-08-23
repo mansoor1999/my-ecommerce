@@ -9,8 +9,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isAuthenticated = false; // Replace with actual authentication logic
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-blue-500 text-white p-4">
+    <div className="min-h-screen bg-gray-500">
+      <header className="bg-stone-900 text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
           <Link href="/">Home</Link>
           <nav>
