@@ -12,7 +12,7 @@ interface Product {
   discount: number;
 }
 
-const SellerDashboard: React.FC = () => {
+const SellerDashboard: React.FC = (props) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
@@ -151,6 +151,7 @@ const SellerDashboard: React.FC = () => {
       await axios.delete(`/api/prisma/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
 
       setProducts(prevProducts => prevProducts.filter(product => product.id !== id));
       if (products.length === 1) {
