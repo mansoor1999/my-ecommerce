@@ -1,16 +1,8 @@
 {
-  "crons": [
+  "REWRITES":[
     {
-      "path": "/api/every-minute",
-      "schedule": "* * * * *"
-    },
-    {
-      "path": "/api/every-hour",
-      "schedule": "0 * * * *"
-    },
-    {
-      "path": "/api/every-day",
-      "schedule": "0 0 * * *"
+      "SOURCE":"/(.*)",
+      "DESTINATION":"/"
     }
   ]
 }
