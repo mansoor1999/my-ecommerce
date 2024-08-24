@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
-import Link from 'next/link';
 
 interface Product {
   id: number;
@@ -112,7 +111,7 @@ const SellerDashboard: React.FC = (props) => {
     }
 
     try {
-      await axios.put(`/api/products/${editingProductId}`, {
+      await axios.put(`/api/prisma/products/${editingProductId}`, {
         name,
         category,
         description,
@@ -143,14 +142,13 @@ const SellerDashboard: React.FC = (props) => {
 
   const handleDeleteProduct = async (id: number) => {
     const token = localStorage.getItem('token');
-    console.log("Token: ", token)
-    // if (!token) {
-    //   router.push('/login');
-    //   return;
-    // }
+    if (!token) {
+      router.push('/login');
+      return;
+    }
 
     try {
-      await axios.delete(`/api/products/${id}`, {
+      await axios.delete(`/api/prisma/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -164,8 +162,6 @@ const SellerDashboard: React.FC = (props) => {
       setError('Failed to delete product. Please try again.');
     }
   };
-
-  
 
   return (
     <Layout>
@@ -264,14 +260,7 @@ const SellerDashboard: React.FC = (props) => {
             ))}
           </ul>
         </div>
-        <div className="min-h-screen bg-gray-500 flex flex-col">
-      <footer className="bg-stone-900 text-white p-4 border-t border-gray-600 mt-auto">
-        <div className="container mx-auto flex justify-center items-center">
-          <Link href="/" className="text-white hover:underline">LogOut</Link>
-        </div>
-      </footer>
-    </div>
-    </div>
+      </div>
     </Layout>
   );
 };

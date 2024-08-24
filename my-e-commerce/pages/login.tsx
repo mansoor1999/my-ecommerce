@@ -35,7 +35,7 @@ const Login: React.FC = (props) => {
 
   return (
     <Layout>
-      <div className="flex items-center justify-center min-h-screen bg-gray-500">
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="w-full max-w-md p-8 space-y-4 bg-white shadow-md rounded-lg">
           <h1 className="text-3xl font-bold text-center text-blue-500">Login</h1>
           {error && <div className="p-4 bg-red-200 text-red-700 rounded">{error}</div>}

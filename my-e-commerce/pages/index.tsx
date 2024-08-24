@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Layout from '../components/Layout';
 
-const Home: React.FC = (props) => {
+const Home: React.FC = () => {
   return (
     <Layout>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-500">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-900">
           Welcome to Our E-Commerce App
         </h1>
