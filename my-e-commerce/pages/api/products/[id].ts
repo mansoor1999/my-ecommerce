@@ -9,8 +9,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: 'Invalid product ID' });
   }
 
-  console.log(`Received ${method} request for product ID: ${id}`); // Debugging log
-
   switch (method) {
     case 'PUT':
       try {
@@ -18,7 +16,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           where: { id: parseInt(id) },
           data: req.body,
         });
-        console.log('Product updated:', product); // Debugging log
         res.status(200).json(product);
       } catch (error) {
         console.error('Error updating product:', error);
@@ -31,7 +28,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         await prisma.product.delete({
           where: { id: parseInt(id) },
         });
-        console.log(`Product with ID ${id} deleted`); // Debugging log
         res.status(204).end();
       } catch (error) {
         console.error('Error deleting product:', error);
